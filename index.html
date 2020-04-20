@@ -15,28 +15,26 @@
             <div class="col s12">
               <div id="main" class="card">
                 <div class="card-content">
-                  <span class="card-title">Task List</span>
+                 <span class="card-title">Task List</span>
                   <div class="row">
-                    <form id="task-form">
+                    <form id="task-form" >
                       <div class="input-field col s12">
-                        <input id="addedTask" type="text" name="task" id="task" value="" required>
+                        <input id="addedTask" type="text" name="task"  value=""  autocomplete="off">
                         <label for="task">New Task</label>
-                        <p id="valMessage"></p>
-                      </div>
-                  </div>
-                  <button id="saveBtn"class="btn" type="button">Save</button>
+                        <div id="warning"></div>
+                        </div>
+                     </div>
+                    <button id="addTaskBtn"class="btn" type="submit">Add task</button>
                   </form>
                 </div>
                 <div class="card-action">
                   <h5 id="task-title">Tasks</h5>
-                  <ul id="taskList" class="collection">
-                    <li class="collection-item">
-                      Template
-                      <a href="#" class="delete-item secondary-content">
-                        <i class="fa fa-remove"></i>
-                      </a>
-                    </li> 
-                  </ul>
+                    <div class="input-field col s12">
+                        <input type="text" name="filter" id="filter">
+                        <label for="filter">Filter Tasks</label>
+                    </div>
+                    <ul id="taskList" class="collection">
+                    </ul>
                   <a class="clear-tasks btn black" href="">Clear Tasks</a>
                 </div>
               </div>
@@ -49,8 +47,8 @@
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
   crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
   <script src="app.js"></script>
 </body>
 </html>
-
 
