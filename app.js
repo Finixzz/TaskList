@@ -1,42 +1,65 @@
-const saveTaskBtn=document.querySelector("#saveBtn");
-const addedTask=document.querySelector("#addedTask");
-const valMessage=document.querySelector("#valMessage");
-let taskList=document.querySelector("#taskList");
+"use strict"
+const form=document.querySelector("#task-form");
+const taskInput=document.querySelector("#addedTask");
+var warning=document.querySelector("#warning");
+var taskList=document.querySelector("#taskList");
+var filter=document.querySelector("#filter");
 
-saveTaskBtn.addEventListener("click",function(){
-    if(addedTask.value==""){
-        valMessage.style.color="red";
-        valMessage.innerHTML="This field is required for subbmiting your new task!";
-        setTimeout(function(){
-            valMessage.innerHTML="";
-        },3000);
+
+loadEventListeners();
+
+function loadEventListeners(){
+
+    form.addEventListener("submit",addNewTask);
+
+    taskList.addEventListener("click",removeTask); 
+
+    filter.addEventListener("keyup",filterTasks);
+    
+}
+
+function addNewTask(e,deleteTaskButton){
+    if(taskInput.value==""){
+        if(form.querySelector(".warn")==null){
+            let warningHTML=`<li class="warn"style="color: red;"> This field is required in order to add new task</li>`
+            warning.innerHTML+=warningHTML;
+        }  
     }else{
+        let task=`
+                <li class="collection-item">
+                  ${taskInput.value}
+                  <a href="#" class="secondary-content">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </li> `;
+        taskList.innerHTML+=task;
 
-        //For fancy delete X button 
-        const deleteTaskBtn=document.createElement("a");
-        deleteTaskBtn.className="delete-item secondary-content";
-        const letterX=document.createElement("i");
-        letterX.className="fa fa-remove";
-        deleteTaskBtn.appendChild(letterX);
-        
-
-        //Appending task to collection
-        const newTask=document.createElement("li");
-        newTask.className="collection-item";
-        newTask.innerHTML=addedTask.value;
-        newTask.appendChild(deleteTaskBtn);
-
-        taskList.append(newTask);
-        addedTask.value="";
-
-
-        
-        const selectedTaskToDelete=document.querySelectorAll(".collection-item");
-        for(let i=0;i<selectedTaskToDelete.length;i++){
-            selectedTaskToDelete[i].addEventListener("click",function(){
-                   selectedTaskToDelete[i].remove();
-            });
-        }
-
+        if(form.querySelector(".warn")!=null)
+            form.querySelector(".warn").remove();
     }
-});
+    e.preventDefault();
+    taskInput.value="";
+    
+}
+
+
+function removeTask(e){
+    e.target.parentElement.querySelector(".fa-remove").addEventListener("click",()=>{
+        if(confirm("Are you sure you want to delete this task?")){
+            e.target.parentElement.querySelector(".fa-remove").parentElement.parentElement.remove();
+        }
+    });  
+}
+
+
+function filterTasks(e){
+    let text=e.target.value.toLowerCase();
+    taskList.querySelectorAll(".collection-item").forEach(task=>{
+        if(task.textContent.toLowerCase().indexOf(text) != -1){
+            task.style.display = 'block';
+        } else {
+            task.style.display = 'none';
+        }
+    });
+}
+
